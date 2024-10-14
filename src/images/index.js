@@ -12,7 +12,7 @@ import Einkauf from './Einkauf.svg';
 import Rechn from './Rechn.svg';
 import Warenbestand from './Warenbestand.svg'
 import Lagerverwaltung from './Lagerverwaltung.svg';
-
+import Pin from './pin.svg';
 
 export {
 	Accounting,
@@ -28,5 +28,6 @@ export {
 	Einkauf,
 	Rechn,
 	Lagerverwaltung,
-	Warenbestand
+	Warenbestand,
+	Pin,
 }

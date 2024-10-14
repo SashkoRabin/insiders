@@ -2,19 +2,45 @@
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: nowrap;
-	overflow-x: scroll;
+	overflow-x: hidden;
 
 
 	.itemWr {
+		position: relative;
 		display: flex;
 		padding: 15px 20px;
 		align-items: center;
 		width: 100%;
+		cursor: pointer;
+		min-width: fit-content;
 
 		img {
 			margin-right: 10px;
 			height: 16px;
 			width: 16px;
+		}
+
+		&.active {
+			border-top: 1px solid #4690E2;
+			background: #F1F5F8;
+		}
+
+		&[data-id="Post Office"] {
+
+		}
+
+		&:hover {
+			background: #F1F5F8;
+		}
+
+		&::after {
+			content: '';
+			display: block; 
+			position: absolute;
+			right: 0;
+			width: 2px;
+			height: 16px;
+			border-right: 1px solid #AEB6CE33;
 		}
 	}
 }
