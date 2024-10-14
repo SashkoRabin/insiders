@@ -5,19 +5,19 @@ import {
 
 
 export const sidebarList = [
-	{ id: 1, name: 'Dashboard', icon: Dashboard}, 
-	{ id: 2, name: 'Banking', icon: Banking },
-	{ id: 3, name: 'Telefonie', icon: Telefonie }, 
-	{ id: 4, name: 'Accounting', icon: Accounting },
-	{ id: 5, name: 'Verkauf', icon: Verkauf }, 
-	{ id: 6, name: 'Statistik', icon: Statistik }, 
-	{ id: 7, name: 'Post Office', icon: PostOffice },
-	{ id: 8, name: 'Administration', icon: Administration }, 
-	{ id: 9, name: 'Help', icon: Help }, 
-	{ id: 10, name: 'Warenbestand', icon: Warenbestand },
-	{ id: 11, name: 'Auswahllisten', icon: Auswahllisten }, 
-	{ id: 12, name: 'Einkauf', icon: Einkauf }, 
-	{ id: 13, name: 'Rechn', icon: Rechn }, 
-	{ id: 14, name: 'Lagerverwaltung', icon: Lagerverwaltung },
+	{ id: 1, name: 'Dashboard', icon: Dashboard, pin: true }, 
+	{ id: 2, name: 'Banking', icon: Banking, pin: false },
+	{ id: 3, name: 'Telefonie', icon: Telefonie, pin: false }, 
+	{ id: 4, name: 'Accounting', icon: Accounting, pin: false },
+	{ id: 5, name: 'Verkauf', icon: Verkauf, pin: false }, 
+	{ id: 6, name: 'Statistik', icon: Statistik, pin: false }, 
+	{ id: 7, name: 'Post Office', icon: PostOffice, pin: false },
+	{ id: 8, name: 'Administration', icon: Administration, pin: false }, 
+	{ id: 9, name: 'Help', icon: Help, pin: false }, 
+	{ id: 10, name: 'Warenbestand', icon: Warenbestand, pin: false },
+	{ id: 11, name: 'Auswahllisten', icon: Auswahllisten, pin: false}, 
+	{ id: 12, name: 'Einkauf', icon: Einkauf, pin: false }, 
+	{ id: 13, name: 'Rechn', icon: Rechn, pin: false }, 
+	{ id: 14, name: 'Lagerverwaltung', icon: Lagerverwaltung, pin: false },
 ];
 export const appTitle = 'Insiders';

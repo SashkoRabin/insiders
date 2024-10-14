@@ -44,3 +44,18 @@
 		}
 	}
 }
+
+
+.dropDownWr {
+	position: absolute;
+	right: 0;
+
+	img {
+		position: absolute;
+		right: 0;
+		background: red;
+		top: 16px;
+		width: 16px;
+		height: 16px;
+	}
+}

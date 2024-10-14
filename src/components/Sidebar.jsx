@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from '../styles/Sidebar.module.scss';
 import { sidebarList } from '../constants/common';
 import ContextMenu from './ContextMenu';
@@ -6,14 +6,23 @@ import SideBarItem from './SidebarItem';
 
 function SideBar() {
   const [activeTab, setActiveTab] = useState(1);
-  const [sidebarArr, setSidebarArr] = useState(sidebarList);
-  const [pinnedItem, setPinnedItem] = useState(1);
+  const [sidebarArr, setSidebarArr] = useState([]);
   const [contextMenu, setContextMenu] = useState(null);
   const [currentItem, setCurrentItem] = useState(0);
+  const [isOverflow, setIsOverflow] = useState(false);
+  const [optionsList, setOptionsList] = useState([]);
+  const listRef = useRef(null);
+
+  const pinHandler = (id) => {
+    const newArr = [...sidebarArr];
+    const index = newArr.findIndex((item) => item.id === id);
+    newArr[index].pin = !newArr[index].pin;
+    setSidebarArr(newArr);
+  }
 
   const handleContextMenu = (event) => {
     event.preventDefault();
-    setContextMenu({ x: event.pageX, y: event.pageY })
+    setContextMenu({ x: event.pageX, y: event.pageY, id: Number(event.target.getAttribute('data-id')) })
   }
 
   const dragStartHandler = (e, id) => {
@@ -21,7 +30,7 @@ function SideBar() {
   }
 
   const dragLeaveHandler = (e) => {
-
+    e.preventDefault();
   }
 
   const dragEndHandler = (e) => {
@@ -51,10 +60,18 @@ function SideBar() {
     }
   }
 
-
-  const handleClick = () => {
-    setContextMenu(null);
-  }
+  const calculateOverflow = () => {
+    const container = listRef.current;
+    const itemWidth = container.scrollWidth / sidebarArr.length;
+    if (container?.scrollWidth > container?.clientWidth) {
+      setIsOverflow(true);
+      const visibleCount = Math.floor(container.clientWidth / itemWidth) + 1;
+      const overflowItems = sidebarArr.slice(visibleCount);
+      setOptionsList(overflowItems);
+    } else {
+      setIsOverflow(false);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = () => setContextMenu(null);
@@ -65,16 +82,31 @@ function SideBar() {
     }
   }, [])
 
+  useEffect(() => {
+    if (sidebarArr.length === 0) {
+      const arr = JSON.parse(localStorage.getItem('array'));
+      if (arr.length > 0) {
+        setSidebarArr(arr);
+      } else {
+        setSidebarArr(sidebarList);
+      }
+    }
+    if (sidebarArr.length > 0) {
+      localStorage.setItem('array', JSON.stringify(sidebarArr));
+    }
+    calculateOverflow();
+
+  }, [sidebarArr]);
+
   return (
-      <div className={styles.sidebarWr} onContextMenu={handleContextMenu}>
+      <div className={styles.sidebarWr} ref={listRef} onContextMenu={handleContextMenu}>
         {sidebarArr.map((item) => (
-          <SideBarItem 
+          <SideBarItem
+            key={item.name + item.id}
             activeTab={activeTab} 
             setActiveTab={setActiveTab} 
-            name={item.name} id={item.id} 
+            name={item.name} id={item.id} pin={item.pin}
             icon={item.icon} 
-            pinnedItem={pinnedItem} 
-            setPinnedItem={setPinnedItem}
             dropHandler={dropHandler}
             dragOverHandler={dragOverHandler}
             dragEndHandler={dragEndHandler}
@@ -82,8 +114,17 @@ function SideBar() {
             dragLeaveHandler={dragLeaveHandler}
           />
         ))}
+        {isOverflow && (
+          <select className={styles.dropDownWr}>
+            { optionsList.map((option, index) => (
+                <option key={option.name + option.id} value={option.id}>
+                  {option.name}
+                </option>
+              ))}
+          </select>
+        )}
         {contextMenu && (
-          <ContextMenu position={contextMenu} />
+          <ContextMenu position={contextMenu} pinHandler={pinHandler} />
           )}
       </div>
   );

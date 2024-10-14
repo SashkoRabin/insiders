@@ -1,15 +1,15 @@
-import { useDrag } from 'react-dnd';
 import styles from '../styles/Sidebar.module.scss';
 
 function SideBarItem({ 
-  activeTab, setPinnedItem, setActiveTab, name, icon, id = 1, pinnedItem,
+  activeTab, setActiveTab, name, icon, id = 1, pin,
   dragStartHandler, dragLeaveHandler, dragEndHandler, dragOverHandler, dropHandler,
 }) {  
+
   return (
     <div 
       onClick={() => setActiveTab(id)} 
       className={`${styles.itemWr} ${activeTab === id ? styles.active : ''}`}
-      data-id={name}
+      data-id={id}
       onDragStart={(e) => dragStartHandler (e, id)}
       onDragLeave={(e) => dragLeaveHandler (e)}
       onDragEnd={(e) => dragEndHandler (e)}
@@ -17,8 +17,8 @@ function SideBarItem({
       onDragOver={(e) => dragOverHandler (e)}
       draggable={true}
     >
-      <img src={icon} alt={name} />
-      {pinnedItem === id ? <></> : <span>{name}</span>}
+      <img data-id={id} src={icon} alt={name} />
+      {pin ? <></> : <span data-id={id}>{name}</span>}
     </div>
   );
 }
