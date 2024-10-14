@@ -1,4 +1,4 @@
-import styles from '../App.css';
+import styles from '../styles/Sidebar.module.scss';
 import { sidebarList } from '../constants/common';
 import SideBarItem from './SidebarItem'
 
