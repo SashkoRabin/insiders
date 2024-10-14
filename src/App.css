@@ -2,3 +2,16 @@ body {
 	margin-top: 69px;
 	margin-left: 60px;
 }
+
+.mainWr {
+	background: #F1F5F8;
+	width: 100%;
+	height: 60vh;
+	padding: 20px;
+}
+
+.main {
+	background: #fff;
+	width: 100%;
+	height: 60vh;
+}

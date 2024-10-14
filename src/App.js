@@ -7,6 +7,11 @@ function App() {
       <header className="App-header">
         <SideBar />
       </header>
+      <main>
+        <div className="mainWr">
+          <div className="main" />
+        </div>
+      </main>
     </div>
   );
 }
