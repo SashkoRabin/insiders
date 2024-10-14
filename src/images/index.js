@@ -14,6 +14,7 @@ import Warenbestand from './Warenbestand.svg'
 import Lagerverwaltung from './Lagerverwaltung.svg';
 import Pin from './pin.svg';
 import Expand from './expand.svg';
+import Cancel from './cancelBtn.svg';
 
 export {
 	Accounting,
@@ -32,4 +33,5 @@ export {
 	Warenbestand,
 	Pin,
 	Expand,
+	Cancel,
 }

@@ -1,8 +1,10 @@
 import styles from '../styles/Sidebar.module.scss';
+import { Cancel } from '../images'
 
 function SideBarItem({ 
   activeTab, setActiveTab, name, icon, id = 1, pin,
   dragStartHandler, dragLeaveHandler, dragEndHandler, dragOverHandler, dropHandler,
+  hasDelete = false, deleteHandler = () => {},
 }) {  
 
   return (
@@ -18,7 +20,8 @@ function SideBarItem({
       draggable={true}
     >
       <img data-id={id} src={icon} alt={name} />
-      {pin ? <></> : <span data-id={id}>{name}</span>}
+      <span data-id={id} className={`${styles.name} ${pin ? styles.pinned : ''}`}>{name}</span>
+      { hasDelete && <img className={styles.cancelBtn} onClick={() => deleteHandler(id)} src={Cancel} alt="" /> }
     </div>
   );
 }

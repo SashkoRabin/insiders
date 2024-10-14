@@ -20,6 +20,15 @@
 			width: 16px;
 		}
 
+		.cancelBtn {
+			position: absolute;
+			right: 35px;
+		}
+
+		.name.pinned {
+			display: none;
+		}
+
 		&.active {
 			border-top: 1px solid #4690E2;
 			background: #F1F5F8;
@@ -31,6 +40,13 @@
 
 		&:hover {
 			background: #F1F5F8;
+
+			.name.pinned {
+				display: block;
+				position: absolute;
+				top: 30px;
+				left: 0;
+			}
 		}
 
 		&::after {
@@ -46,16 +62,14 @@
 }
 
 
-.dropDownWr {
+.dropDown {
+	width: 36px;
+	height: 48px;
+	background: #4690E2;
 	position: absolute;
 	right: 0;
-
-	img {
-		position: absolute;
-		right: 0;
-		background: red;
-		top: 16px;
-		width: 16px;
-		height: 16px;
-	}
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
 }

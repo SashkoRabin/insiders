@@ -2,12 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import styles from '../styles/Sidebar.module.scss';
 import { sidebarList } from '../constants/common';
 import ContextMenu from './ContextMenu';
+import DropDownMenu from './DropDownMenu'
 import SideBarItem from './SidebarItem';
+import { Expand } from '../images'
 
 function SideBar() {
   const [activeTab, setActiveTab] = useState(1);
   const [sidebarArr, setSidebarArr] = useState([]);
   const [contextMenu, setContextMenu] = useState(null);
+  const [isDropDown, setIsDropDown] = useState(false);
   const [currentItem, setCurrentItem] = useState(0);
   const [isOverflow, setIsOverflow] = useState(false);
   const [optionsList, setOptionsList] = useState([]);
@@ -25,8 +28,17 @@ function SideBar() {
     setContextMenu({ x: event.pageX, y: event.pageY, id: Number(event.target.getAttribute('data-id')) })
   }
 
+  const deleteHandler = (id) => {
+    setSidebarArr([...sidebarArr].filter((item) => item.id !== id));
+  }
+
+  const toggleDropDown = () => {
+    setIsDropDown((prev) => !prev);
+  }
+
   const dragStartHandler = (e, id) => {
     setCurrentItem(id);
+    e.target.background = '#7F858D'
   }
 
   const dragLeaveHandler = (e) => {
@@ -49,7 +61,11 @@ function SideBar() {
       setSidebarArr((prev) => {
         const newArr = [...prev];
         const idIndex = newArr.findIndex((item) => item.id === id)
-        const currentIndex = newArr.findIndex((item) => item.id === currentItem)
+        const currentIndex = newArr.findIndex((item) => item.id === currentItem);
+        if (newArr[idIndex].pin === true && newArr[currentIndex].pin !== true) return newArr;
+        if (newArr[currentIndex].pin === true) {
+          newArr[currentIndex].pin = false;
+        }
         const temp = newArr[idIndex];
         newArr[idIndex]= newArr[currentIndex];
         newArr[currentIndex] = temp;
@@ -85,7 +101,7 @@ function SideBar() {
   useEffect(() => {
     if (sidebarArr.length === 0) {
       const arr = JSON.parse(localStorage.getItem('array'));
-      if (arr.length > 0) {
+      if (arr?.length > 0) {
         setSidebarArr(arr);
       } else {
         setSidebarArr(sidebarList);
@@ -112,17 +128,24 @@ function SideBar() {
             dragEndHandler={dragEndHandler}
             dragStartHandler={dragStartHandler}
             dragLeaveHandler={dragLeaveHandler}
+            deleteHandler={deleteHandler}
           />
         ))}
-        {isOverflow && (
-          <select className={styles.dropDownWr}>
-            { optionsList.map((option, index) => (
-                <option key={option.name + option.id} value={option.id}>
-                  {option.name}
-                </option>
-              ))}
-          </select>
-        )}
+        {isOverflow && <div className={styles.dropDown} onClick={toggleDropDown}>
+          <img src={Expand} alt="expand" />
+          {isDropDown && 
+          <DropDownMenu 
+            options={optionsList}
+            dropHandler={dropHandler}
+            activeTab={activeTab} 
+            setActiveTab={setActiveTab} 
+            dragOverHandler={dragOverHandler}
+            dragEndHandler={dragEndHandler}
+            dragStartHandler={dragStartHandler}
+            dragLeaveHandler={dragLeaveHandler}
+            deleteHandler={deleteHandler}
+          />}
+        </div>}
         {contextMenu && (
           <ContextMenu position={contextMenu} pinHandler={pinHandler} />
           )}
